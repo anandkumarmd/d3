@@ -1,4 +1,151 @@
 d3
 ==
 http://bost.ocks.org/mike/bar/
+-----------------------------------------
+-----------------------------------------
+HTML chart
+----
+<!DOCTYPE html>
+<style>
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+</style>
+<div class="chart">
+  <div style="width: 40px;">4</div>
+  <div style="width: 80px;">8</div>
+  <div style="width: 150px;">15</div>
+  <div style="width: 160px;">16</div>
+  <div style="width: 230px;">23</div>
+  <div style="width: 420px;">42</div>
+</div>
+
+OR  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+d3.select(".chart")
+  .selectAll("div")
+    .data(data)
+  .enter().append("div")
+    .style("width", function(d) { return d * 10 + "px"; })
+    .text(function(d) { return d; });
+-------------------------------------------------
+SVG  vs HTML
+
+despite obvious differences, SVG and HTML share many similarities. 
+You can write SVG markup and embed it directly in a web page (provided you use <!DOCTYPE html>). 
+You can inspect SVG elements in your browser’s developer tools. 
+And SVG elements can be styled with CSS, albeit using different property names like fill instead of background-color. 
+However, unlike HTML, SVG elements must be positioned relative to the top-left corner of the container; 
+SVG does not support flow layout or even text wrapping.
+
+1. unlike the div elements that were implicitly positioned using flow layout, 
+   the SVG elements must be absolutely positioned with hard-coded translations relative to the origin.
+2. quick rule of thumb (can use attributes for anything, I recommend you prefer styles for aesthetics)
+   ( common point of confusion in SVG is distinguishing between properties that must be specified as 
+     attributes and properties that can be set as styles.)
+   i.  geometry (such as the width of a rect element) must be specified as attributes,
+   ii. while aesthetics (such as a fill color) can be specified as styles. 
+3. SVG requires text to be placed explicitly in text elements. Since text elements do not support padding or margins, 
+   the text position must be offset by three pixels from the end of the bar, 
+   while the 'dy' offset is used to center the text vertically.   
+===============================================
+<!DOCTYPE html>
+<style>
+
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+</style>
+<svg class="chart" width="420" height="120">
+  <g transform="translate(0,0)">
+    <rect width="40" height="19"></rect>
+    <text x="37" y="9.5" dy=".35em">4</text>
+  </g>
+  <g transform="translate(0,20)">
+    <rect width="80" height="19"></rect>
+    <text x="77" y="9.5" dy=".35em">8</text>
+  </g>
+  <g transform="translate(0,40)">
+    <rect width="150" height="19"></rect>
+    <text x="147" y="9.5" dy=".35em">15</text>
+  </g>
+  <g transform="translate(0,60)">
+    <rect width="160" height="19"></rect>
+    <text x="157" y="9.5" dy=".35em">16</text>
+  </g>
+  <g transform="translate(0,80)">
+    <rect width="230" height="19"></rect>
+    <text x="227" y="9.5" dy=".35em">23</text>
+  </g>
+  <g transform="translate(0,100)">
+    <rect width="420" height="19"></rect>
+    <text x="417" y="9.5" dy=".35em">42</text>
+  </g>
+</svg>
+
+OR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+</style>
+<svg class="chart"></svg>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var data = [4, 8, 15, 16, 23, 42];
+
+var width = 420,
+    barHeight = 20;
+
+var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range([0, width]);
+
+var chart = d3.select(".chart")
+    .attr("width", width)
+    .attr("height", barHeight * data.length);
+
+var bar = chart.selectAll("g")
+    .data(data)
+  .enter().append("g")
+    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+bar.append("rect")
+    .attr("width", x)
+    .attr("height", barHeight - 1);
+
+bar.append("text")
+    .attr("x", function(d) { return x(d) - 3; })
+    .attr("y", barHeight / 2)
+    .attr("dy", ".35em")
+    .text(function(d) { return d; });
+
+</script>
+-------------------------------------------------
 
