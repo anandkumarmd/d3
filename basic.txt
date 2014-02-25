@@ -1,0 +1,114 @@
+D3’s selection operators such as attr, style and property. 
+
+allow you to specify the value either as a constant (the same for all selected elements) or a function (computed separately for each element). 
+If the value of a particular attribute should be based on the element’s associated data, then use a function to compute it;
+otherwise, if it’s the same for all elements, then a string or number suffices.
+
+-----------------------------------------------------
+http://bost.ocks.org/mike/join/
+===============================
+Join & 
+
+var circle = svg.selectAll("circle")
+    .data(data);
+
+circle.exit().remove();
+
+circle.enter().append("circle")
+    .attr("r", 2.5);
+
+circle
+    .attr("cx", function(d) { return d.x; })
+    .attr("cy", function(d) { return d.y; });
+
+Whenever this code is run, it recomputes the data join and maintains the desired correspondence between elements and data. 
+If the new dataset is larger, the surplus data ends up in the enter selection and new nodes are added. 
+If the new dataset is exactly the same size, then all the elements are simply updated with new positions, and no elements are added or removed.
+If the new dataset is smaller than the old one, the surplus elements end up in the exit selection and get removed. 
+-----------------------------------------------------------
+
+circle.enter().append("circle")
+    .attr("r", 0)
+  .transition()
+    .attr("r", 2.5);
+
+circle.exit().transition()//Likewise, to shrink-out:
+    .attr("r", 0)
+    .remove();    
+    
+------------------------------------------------------------    
+
+scaling to fit
+==============
+var x = d3.scale.linear()
+    .range([0, 420]);           //draw'ng width or height
+    .domain([0, d3.max(data)])  //data min & max
+    
+
+----------------------------
+http://bost.ocks.org/mike/bar/2/
+var data = [
+  {name: "Locke",    value:  4},
+  {name: "Reyes",    value:  8},
+  {name: "Ford",     value: 15},
+  {name: "Jarrah",   value: 16},
+  {name: "Shephard", value: 23},
+  {name: "Kwon",     value: 42}
+];
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+</style>
+<svg class="chart"></svg>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 420,
+    barHeight = 20;
+
+var chart = d3.select(".chart")
+    .attr("width", width);
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+d3.tsv("data.tsv", type, function(error, data) {
+
+  x.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+  chart.attr("height", barHeight * data.length);
+
+  var bar = chart.selectAll("g")
+      .data(data)
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+  bar.append("rect")
+      .attr("width", function(d) { return x(d.value); })
+      .attr("height", barHeight - 1);
+
+  bar.append("text")
+      .attr("x", function(d) { return x(d.value) - 3; })
+      .attr("y", barHeight / 2)
+      .attr("dy", ".35em")
+      .text(function(d) { return d.value; });
+});
+
+function type(d) {
+  d.value = +d.value; // coerce to number
+  return d;
+}
+
+</script>
