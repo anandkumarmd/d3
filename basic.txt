@@ -1,3 +1,5 @@
+http://bost.ocks.org/mike/bar/
+
 D3’s selection operators such as attr, style and property. 
 
 allow you to specify the value either as a constant (the same for all selected elements) or a function (computed separately for each element). 
