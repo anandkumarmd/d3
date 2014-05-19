@@ -6,12 +6,22 @@ allow you to specify the value either as a constant (the same for all selected e
 If the value of a particular attribute should be based on the element’s associated data, then use a function to compute it;
 otherwise, if it’s the same for all elements, then a string or number suffices.
 
+-----axis--------------------------
+
+range
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+var y = d3.scale.linear().range([height, 0]);
+
+domain
+var xAxis = d3.svg.axis().scale(x).orient("bottom");
+var yAxis = d3.svg.axis().scale(y).orient("left").ticks(10);
+
 -----------data-------------------
 https://www.dashingd3js.com/binding-data-to-dom-elements
 console.log(d3.select("body").data([1]));
 When data is assigned to an element, it is stored in the property __data__ (double underscore)
 
-----getting/reading data
+----getting/reading data-----
 var theData = [ 1, 2, 3 ]
 var p = d3.select("body").selectAll("p")
   .data(theData)
@@ -19,6 +29,51 @@ var p = d3.select("body").selectAll("p")
   .append("p")
   .text( function (d, i) { return d; } );
 -----------------------------------------------------
+refresh() {
+  x.domain(data.map(function(d) { return d.name; }));
+  y.domain([0, d3.max(data, function(d) { return d.count; })]);
+  
+  svg.selectAll('g.axis').remove();
+  //X axis
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+      
+  //Y axis
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Count");
+
+  var bars = svg.selectAll(".bar").data(data);
+  bars.enter()
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("width", x.rangeBand());
+
+  //Animate bars
+  bars
+      .transition()
+      .duration(1000)
+      .attr('height', function(d) { return height - y(d.count); })
+      .attr("y", function(d) { return y(d.count); })
+};
+
+ //Watch 'data' and run scope.render(newVal) whenever it changes
+ //Use true for 'objectEquality' property so comparisons are done on equality and not reference
+  scope.$watch('data', function(){scope.render(scope.data);}, true);  
+
+
+
+-------------------------------------------------------
 http://bost.ocks.org/mike/join/
 ===============================
 Join & 
