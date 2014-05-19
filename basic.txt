@@ -10,6 +10,14 @@ otherwise, if it’s the same for all elements, then a string or number suffices
 https://www.dashingd3js.com/binding-data-to-dom-elements
 console.log(d3.select("body").data([1]));
 When data is assigned to an element, it is stored in the property __data__ (double underscore)
+
+----getting/reading data
+var theData = [ 1, 2, 3 ]
+var p = d3.select("body").selectAll("p")
+  .data(theData)
+  .enter()
+  .append("p")
+  .text( function (d) { return d; } );
 -----------------------------------------------------
 http://bost.ocks.org/mike/join/
 ===============================
