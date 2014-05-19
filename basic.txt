@@ -17,7 +17,7 @@ var p = d3.select("body").selectAll("p")
   .data(theData)
   .enter()
   .append("p")
-  .text( function (d) { return d; } );
+  .text( function (d, i) { return d; } );
 -----------------------------------------------------
 http://bost.ocks.org/mike/join/
 ===============================
