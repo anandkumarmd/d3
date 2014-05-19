@@ -6,6 +6,10 @@ allow you to specify the value either as a constant (the same for all selected e
 If the value of a particular attribute should be based on the element’s associated data, then use a function to compute it;
 otherwise, if it’s the same for all elements, then a string or number suffices.
 
+-----------data-------------------
+https://www.dashingd3js.com/binding-data-to-dom-elements
+console.log(d3.select("body").data([1]));
+When data is assigned to an element, it is stored in the property __data__ (double underscore)
 -----------------------------------------------------
 http://bost.ocks.org/mike/join/
 ===============================
