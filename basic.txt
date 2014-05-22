@@ -1,4 +1,5 @@
 http://bost.ocks.org/mike/bar/
+https://www.dashingd3js.com/svg-paths-and-d3js
 
 D3’s selection operators such as attr, style and property. 
 
