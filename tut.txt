@@ -1,6 +1,7 @@
 d3
 ==
 http://bost.ocks.org/mike/bar/
+https://www.dashingd3js.com/svg-paths-and-d3js
 -----------------------------------------
 -----------------------------------------
 HTML chart
