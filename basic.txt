@@ -1,5 +1,7 @@
 http://bost.ocks.org/mike/bar/
 https://www.dashingd3js.com/svg-paths-and-d3js
+http://www.jeromecukier.net/blog/2011/08/11/d3-scales-and-color/
+
 
 D3’s selection operators such as attr, style and property. 
 
