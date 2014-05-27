@@ -1,0 +1,7 @@
+transclude
+
+//https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements
+var intElemClientWidth = 
+Element.offsetWidth = border + padding + content (visible/ not scroll)  (no margin)
+Element.clientWidth = padding + content ( no margin, border, scrollbar)
+Element.scrollWidth (how big is element)
