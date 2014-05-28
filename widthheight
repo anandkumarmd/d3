@@ -5,3 +5,7 @@ var intElemClientWidth =
 Element.offsetWidth = border + padding + content (visible/ not scroll)  (no margin)
 Element.clientWidth = padding + content ( no margin, border, scrollbar)
 Element.scrollWidth (how big is element)
+
+
+//onmouseover
+http://stackoverflow.com/questions/10805184/d3-show-data-on-mouseover-of-circle
