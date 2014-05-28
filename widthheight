@@ -9,3 +9,8 @@ Element.scrollWidth (how big is element)
 
 //onmouseover
 http://stackoverflow.com/questions/10805184/d3-show-data-on-mouseover-of-circle
+
+
+-ve y values
+http://stackoverflow.com/questions/12923338/d3-grid-when-the-axis-is-in-the-middle-of-the-page?rq=1
+http://jsfiddle.net/2y3er/2/
