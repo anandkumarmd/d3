@@ -1,0 +1,23 @@
+3 layers
+
+
+Grid
+----
+DataView
+----
+Data
+  
+
+rough list of features that DataView adds to the grid:
+-Paging.
+-Sorting.
+-Search.
+-Grouping with totals.
+-Expand/collapse groups.
+
+grid.getData().getItem(value)
+
+
+grid.getData()[value] vs grid.getData().getItem(value)
+getItemByIdx, not getItemById
+dataview.getItem( hObjMarcado[a_id] )
