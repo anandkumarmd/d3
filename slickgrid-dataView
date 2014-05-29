@@ -14,6 +14,7 @@ rough list of features that DataView adds to the grid:
 -Search.
 -Grouping with totals.
 -Expand/collapse groups.
+DataView allows to sort and filter the data without modifying it or the grid.
 
 grid.getData().getItem(value)
 
